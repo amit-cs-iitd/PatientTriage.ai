@@ -2,7 +2,7 @@
 
 > **Intelligent Emergency Department (ED) co-pilot separating clinical urgency from operational flow. Preventing dangerous delays during hospital surges without replacing human clinical judgment.**
 
-[![Video Demo Link](https://img.shields.io/badge/Demo-Video%20Walkthrough-red)]
+[![Video Demo](https://img.shields.io/badge/Video-Demo-red)](https://drive.google.com/file/d/1l4FE6dPGHn5I2FAas1sZuY-VDPyrSs1y/view?usp=sharing)
 
 ---
 
