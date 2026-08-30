@@ -1,0 +1,103 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum AgeGroup {
+  PEDIATRIC
+  ADULT
+  GERIATRIC
+}
+
+enum Sex {
+  MALE
+  FEMALE
+  OTHER
+  UNKNOWN
+}
+
+enum TriageLevel {
+  LEVEL_1
+  LEVEL_2
+  LEVEL_3
+  LEVEL_4
+  LEVEL_5
+}
+
+enum TriageStatus {
+  WAITING
+  IN_REVIEW
+  COMPLETED
+  REASSESSMENT
+}
+
+enum AuditAction {
+  ESCALATE
+  DOWNGRADE
+  MODIFY_ACTIONS
+  DISMISS_ALERT
+}
+
+model Patient {
+  id              String        @id @default(uuid())
+  mrn             String        @unique
+  firstName       String
+  lastName        String
+  dateOfBirth     DateTime      @db.Date
+  sex             Sex
+  ageGroup        AgeGroup
+  medicalHistory  Json          @default("[]")
+  allergies       Json          @default("[]")
+  medications     Json          @default("[]")
+  isFirstVisit    Boolean       @default(false)
+  arrivalTime     DateTime      @default(now())
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  triageEvents    TriageEvent[]
+
+  @@index([ageGroup])
+  @@index([arrivalTime])
+}
+
+model TriageEvent {
+  id                String        @id @default(uuid())
+  patientId         String
+  patient           Patient       @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  aiSuggestedLevel  TriageLevel
+  aiConfidenceScore Float
+  suggestedActions  Json
+  vitalSigns        Json
+  symptoms          Json
+  presentationNotes String        @db.Text
+  uncertaintyReason String?       @db.Text
+  status            TriageStatus  @default(WAITING)
+  triageTime        DateTime      @default(now())
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+  auditLogs         AuditLog[]
+
+  @@index([patientId])
+  @@index([status])
+  @@index([triageTime])
+}
+
+model AuditLog {
+  id              String      @id @default(uuid())
+  triageEventId   String
+  triageEvent     TriageEvent @relation(fields: [triageEventId], references: [id], onDelete: Cascade)
+  clinicianId     String
+  clinicianName   String
+  clinicianRole   String
+  originalAiLevel TriageLevel
+  overrideLevel   TriageLevel
+  action          AuditAction
+  overrideReason  String      @db.Text
+  metadata        Json        @default("{}")
+  createdAt       DateTime    @default(now())
+
+  @@index([triageEventId])
+  @@index([createdAt])
+}

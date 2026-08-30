@@ -1,0 +1,103 @@
+.queue-panel {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.queue-panel__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 1.25rem 1.5rem 0.75rem;
+}
+
+.queue-panel__loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 240px;
+}
+
+.confidence-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.confidence-warning {
+  animation: pulse-warning 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse-warning {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.45;
+  }
+}
+
+.uncertainty-cell {
+  max-width: 220px;
+}
+
+.actions-cell {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  max-width: 320px;
+}
+
+.wait-time-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+/* --- Row highlight states --- */
+
+.queue-row--critical {
+  background-color: rgba(211, 47, 47, 0.04);
+}
+
+/* Surge mode: Level 2 patient waiting too long (> 10 min) */
+.queue-row--surge-danger {
+  background-color: rgba(211, 47, 47, 0.12) !important;
+  animation: surge-pulse-danger 2s ease-in-out infinite;
+}
+
+@keyframes surge-pulse-danger {
+  0%,
+  100% {
+    background-color: rgba(211, 47, 47, 0.12);
+  }
+  50% {
+    background-color: rgba(211, 47, 47, 0.25);
+  }
+}
+
+/* Surge mode: Level 3 patient waiting too long (> 30 min) */
+.queue-row--surge-warning {
+  background-color: rgba(237, 108, 2, 0.10) !important;
+  animation: surge-pulse-warning 2.5s ease-in-out infinite;
+}
+
+@keyframes surge-pulse-warning {
+  0%,
+  100% {
+    background-color: rgba(237, 108, 2, 0.10);
+  }
+  50% {
+    background-color: rgba(237, 108, 2, 0.22);
+  }
+}
+
+/* Override badge */
+.override-badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}

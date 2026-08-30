@@ -1,0 +1,45 @@
+.dashboard {
+  min-height: 100vh;
+  background: #eef2f6;
+}
+
+.dashboard__appbar {
+  background: linear-gradient(90deg, #0d47a1 0%, #1565c0 100%);
+}
+
+.dashboard__surge-btn {
+  text-transform: none !important;
+  font-weight: 600 !important;
+  border-color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.dashboard__surge-banner {
+  border-radius: 0 !important;
+  animation: surge-banner-pulse 2s ease-in-out infinite;
+}
+
+@keyframes surge-banner-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.85;
+  }
+}
+
+.dashboard__container {
+  padding: 1.5rem !important;
+}
+
+.dashboard__split {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+}
+
+@media (max-width: 960px) {
+  .dashboard__split {
+    flex-direction: column;
+  }
+}
